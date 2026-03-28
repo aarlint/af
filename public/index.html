@@ -469,6 +469,96 @@ a.action-eo:hover { color: #60a5fa; }
 }
 
 .footer a { color: var(--text-dim); }
+
+.info-section {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.info-toggle {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  cursor: pointer;
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.info-toggle:hover { color: var(--text-dim); }
+
+.info-toggle .arrow {
+  transition: transform 0.2s ease;
+  font-size: 0.6rem;
+}
+
+.info-section.open .info-toggle .arrow { transform: rotate(90deg); }
+
+.info-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.info-section.open .info-content { max-height: 600px; }
+
+.info-inner {
+  padding-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.info-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+.info-card h3 {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+}
+
+.info-card p {
+  font-family: var(--serif);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.info-card .score-scale {
+  display: flex;
+  gap: 6px;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.info-card .score-chip {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 2px;
+}
+
+.score-chip.sp { background: rgba(34,197,94,0.15); color: var(--green-strong); }
+.score-chip.p { background: rgba(74,222,128,0.1); color: var(--green); }
+.score-chip.n { background: rgba(82,82,91,0.2); color: var(--text-muted); }
+.score-chip.neg { background: rgba(248,113,113,0.1); color: var(--red); }
+.score-chip.sn { background: rgba(239,68,68,0.15); color: var(--red-strong); }
 </style>
 </head>
 <body>
@@ -480,6 +570,39 @@ a.action-eo:hover { color: #60a5fa; }
 </header>
 
 <div class="container">
+  <section class="info-section" id="info-section">
+    <button class="info-toggle" onclick="document.getElementById('info-section').classList.toggle('open')">
+      <span class="arrow">&#9656;</span> About This Evaluation
+    </button>
+    <div class="info-content">
+      <div class="info-inner">
+        <div class="info-card">
+          <h3>Data Sources</h3>
+          <p>263 actions: 251 executive orders (EO 14147&ndash;14397) from the <a href="https://www.federalregister.gov/presidential-documents/executive-orders/donald-trump/2025" style="color:var(--text-dim)">Federal Register</a>, plus 12 military operations and Pentagon directives from official statements. Covers Jan 20, 2025 through Mar 2026.</p>
+        </div>
+        <div class="info-card">
+          <h3>Scoring Method</h3>
+          <p>Each action is scored from each country's perspective on a 5-point scale:</p>
+          <div class="score-scale">
+            <span class="score-chip sp">+2 Strongly Positive</span>
+            <span class="score-chip p">+1 Positive</span>
+            <span class="score-chip n">0 Neutral</span>
+            <span class="score-chip neg">-1 Negative</span>
+            <span class="score-chip sn">-2 Strongly Negative</span>
+          </div>
+        </div>
+        <div class="info-card">
+          <h3>Evaluation Process</h3>
+          <p>Each country was evaluated independently by a dedicated AI analyst prompted to consider that nation's strategic interests, trade relationships, security concerns, and diplomatic priorities. Domestic US actions are scored 0 unless they have meaningful spillover effects.</p>
+        </div>
+        <div class="info-card">
+          <h3>Limitations</h3>
+          <p>Scores are AI-generated assessments, not expert geopolitical analysis. They reflect likely directional impact, not magnitude. Second-order effects and long-term consequences may differ from initial scoring. All actions are weighted equally regardless of real-world significance.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="scoreboard-section">
     <div class="section-label">Country Impact Scoreboard</div>
     <div class="scoreboard" id="scoreboard"></div>
@@ -495,14 +618,14 @@ a.action-eo:hover { color: #60a5fa; }
   </section>
 
   <footer class="footer">
-    263 executive orders and military actions evaluated across 10 countries.
+    263 executive orders and military actions evaluated across 12 countries.
     <br>Data sourced from the <a href="https://www.federalregister.gov/presidential-documents/executive-orders/donald-trump/2025">Federal Register</a>, White House, and Pentagon statements.
     <br>Built for <a href="https://apps.notdone.dev">notdone.dev</a>
   </footer>
 </div>
 
 <script>
-const COUNTRIES = ["Israel","Germany","UK","Japan","South Korea","Australia","Canada","China","Russia","Iran"];
+const COUNTRIES = ["Israel","Germany","UK","Japan","South Korea","Australia","Canada","China","Russia","Iran","India","Mexico"];
 
 const SCORE_LABEL = {2:"+2",1:"+1",0:"0","-1":"-1","-2":"-2"};
 const SCORE_NAME = {2:"Strongly Positive",1:"Positive",0:"Neutral","-1":"Negative","-2":"Strongly Negative"};
@@ -657,7 +780,7 @@ fetch('data.json')
   .then(data => {
     ACTIONS = data;
     document.getElementById('stats').textContent =
-      `${ACTIONS.length} executive orders & military actions \u00b7 10 countries \u00b7 ${ACTIONS.length * 10} evaluations`;
+      `${ACTIONS.length} executive orders & military actions \u00b7 ${COUNTRIES.length} countries \u00b7 ${ACTIONS.length * COUNTRIES.length} evaluations`;
     renderScoreboard();
     renderFilters();
     renderActions();
