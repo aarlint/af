@@ -196,11 +196,17 @@ body {
 
 .filters {
   padding: 1.25rem 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.filter-row {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
   align-items: center;
-  border-bottom: 1px solid var(--border);
 }
 
 .filter-btn {
@@ -220,6 +226,10 @@ body {
 .filter-btn:hover { border-color: var(--border-light); color: var(--text); }
 .filter-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
 
+.filter-btn.pos.active { background: var(--green); color: var(--bg); border-color: var(--green); }
+.filter-btn.neg.active { background: var(--red); color: var(--bg); border-color: var(--red); }
+.filter-btn.neu.active { background: var(--text-muted); color: var(--bg); border-color: var(--text-muted); }
+
 .filter-clear {
   font-family: var(--mono);
   font-size: 0.65rem;
@@ -233,6 +243,37 @@ body {
 }
 
 .filter-clear:hover { color: var(--text-dim); }
+
+.search-input {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  padding: 0.4rem 0.75rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--text);
+  width: 100%;
+  max-width: 320px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.search-input::placeholder { color: var(--text-muted); }
+.search-input:focus { border-color: var(--border-light); }
+
+.sort-select {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  padding: 0.35rem 0.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--text-dim);
+  cursor: pointer;
+  outline: none;
+}
+
+.sort-select:focus { border-color: var(--border-light); }
 
 .actions-section { padding: 1.5rem 0 4rem; }
 
@@ -608,9 +649,7 @@ a.action-eo:hover { color: #60a5fa; }
     <div class="scoreboard" id="scoreboard"></div>
   </section>
 
-  <div class="filters" id="filters">
-    <div class="section-label" style="margin-bottom:0;">Category</div>
-  </div>
+  <div class="filters" id="filters"></div>
 
   <section class="actions-section">
     <div class="action-count" id="action-count"></div>
@@ -638,6 +677,9 @@ const CAT_SLUG = c => 'cat-' + c.toLowerCase().replace(/[^a-z]+/g, '-').replace(
 let ACTIONS = [];
 let activeCountry = null;
 let activeCategory = null;
+let activeImpact = null; // 'positive', 'negative', 'neutral'
+let searchQuery = '';
+let sortMode = 'date'; // 'date', 'impact-desc', 'impact-asc'
 
 function computeScores() {
   const scores = {};
@@ -681,7 +723,9 @@ function renderScoreboard() {
     card.addEventListener('click', () => {
       const c = card.dataset.country;
       activeCountry = activeCountry === c ? null : c;
+      if (!activeCountry) { activeImpact = null; sortMode = 'date'; }
       renderScoreboard();
+      renderFilters();
       renderActions();
     });
   });
@@ -690,11 +734,56 @@ function renderScoreboard() {
 function renderFilters() {
   const cats = [...new Set(ACTIONS.map(a => a.category))].sort();
   const el = document.getElementById('filters');
-  el.innerHTML = `<div class="section-label" style="margin-bottom:0;">Category</div>` +
-    cats.map(c => `<button class="filter-btn${activeCategory === c ? ' active' : ''}" data-cat="${c}">${c}</button>`).join('') +
-    `<button class="filter-clear" id="clear-filters">Clear filters</button>`;
 
-  el.querySelectorAll('.filter-btn').forEach(btn => {
+  const impactRow = activeCountry ? `
+    <div class="filter-row">
+      <div class="section-label" style="margin-bottom:0;">Impact on ${activeCountry}</div>
+      <button class="filter-btn pos${activeImpact === 'positive' ? ' active' : ''}" data-impact="positive">Positive</button>
+      <button class="filter-btn neg${activeImpact === 'negative' ? ' active' : ''}" data-impact="negative">Negative</button>
+      <button class="filter-btn neu${activeImpact === 'neutral' ? ' active' : ''}" data-impact="neutral">Neutral</button>
+    </div>` : '';
+
+  const sortOptions = activeCountry
+    ? `<select class="sort-select" id="sort-select">
+        <option value="date"${sortMode === 'date' ? ' selected' : ''}>Sort by date</option>
+        <option value="impact-desc"${sortMode === 'impact-desc' ? ' selected' : ''}>Most positive first</option>
+        <option value="impact-asc"${sortMode === 'impact-asc' ? ' selected' : ''}>Most negative first</option>
+      </select>`
+    : `<select class="sort-select" id="sort-select">
+        <option value="date"${sortMode === 'date' ? ' selected' : ''}>Sort by date</option>
+      </select>`;
+
+  el.innerHTML = `
+    <div class="filter-row">
+      <input type="text" class="search-input" id="search-input" placeholder="Search actions..." value="${searchQuery}">
+      ${sortOptions}
+      <button class="filter-clear" id="clear-filters">Clear all</button>
+    </div>
+    <div class="filter-row">
+      <div class="section-label" style="margin-bottom:0;">Category</div>
+      ${cats.map(c => `<button class="filter-btn${activeCategory === c ? ' active' : ''}" data-cat="${c}">${c}</button>`).join('')}
+    </div>
+    ${impactRow}`;
+
+  // Search
+  const searchInput = document.getElementById('search-input');
+  let searchTimeout;
+  searchInput.addEventListener('input', () => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      searchQuery = searchInput.value.trim().toLowerCase();
+      renderActions();
+    }, 150);
+  });
+
+  // Sort
+  document.getElementById('sort-select').addEventListener('change', (e) => {
+    sortMode = e.target.value;
+    renderActions();
+  });
+
+  // Category buttons
+  el.querySelectorAll('[data-cat]').forEach(btn => {
     btn.addEventListener('click', () => {
       const c = btn.dataset.cat;
       activeCategory = activeCategory === c ? null : c;
@@ -703,9 +792,23 @@ function renderFilters() {
     });
   });
 
+  // Impact buttons
+  el.querySelectorAll('[data-impact]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const v = btn.dataset.impact;
+      activeImpact = activeImpact === v ? null : v;
+      renderFilters();
+      renderActions();
+    });
+  });
+
+  // Clear all
   document.getElementById('clear-filters').addEventListener('click', () => {
     activeCategory = null;
     activeCountry = null;
+    activeImpact = null;
+    searchQuery = '';
+    sortMode = 'date';
     renderFilters();
     renderScoreboard();
     renderActions();
@@ -715,11 +818,28 @@ function renderFilters() {
 function renderActions() {
   let filtered = ACTIONS;
   if (activeCategory) filtered = filtered.filter(a => a.category === activeCategory);
+  if (searchQuery) filtered = filtered.filter(a => a.title.toLowerCase().includes(searchQuery));
+  if (activeImpact && activeCountry) {
+    filtered = filtered.filter(a => {
+      const s = a.impacts[activeCountry] || 0;
+      if (activeImpact === 'positive') return s > 0;
+      if (activeImpact === 'negative') return s < 0;
+      return s === 0;
+    });
+  }
 
-  document.getElementById('action-count').textContent =
-    `Showing ${filtered.length} of ${ACTIONS.length} actions` +
-    (activeCountry ? ` \u00b7 highlighting ${activeCountry}` : '') +
-    (activeCategory ? ` \u00b7 ${activeCategory}` : '');
+  if (sortMode === 'impact-desc' && activeCountry) {
+    filtered = [...filtered].sort((a, b) => (b.impacts[activeCountry] || 0) - (a.impacts[activeCountry] || 0));
+  } else if (sortMode === 'impact-asc' && activeCountry) {
+    filtered = [...filtered].sort((a, b) => (a.impacts[activeCountry] || 0) - (b.impacts[activeCountry] || 0));
+  }
+
+  const parts = [`Showing ${filtered.length} of ${ACTIONS.length} actions`];
+  if (activeCountry) parts.push(activeCountry);
+  if (activeCategory) parts.push(activeCategory);
+  if (activeImpact) parts.push(activeImpact);
+  if (searchQuery) parts.push(`"${searchQuery}"`);
+  document.getElementById('action-count').textContent = parts.join(' \u00b7 ');
 
   const el = document.getElementById('action-list');
   el.innerHTML = filtered.map(a => {
