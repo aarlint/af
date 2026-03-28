@@ -21,12 +21,9 @@
   --text-muted: #71717a;
   --green-strong: #22c55e;
   --green: #4ade80;
-  --green-dim: #166534;
   --red-strong: #ef4444;
   --red: #f87171;
-  --red-dim: #991b1b;
   --yellow: #fbbf24;
-  --yellow-dim: #92400e;
   --neutral-dot: #52525b;
   --mono: 'JetBrains Mono', monospace;
   --serif: 'Source Serif 4', Georgia, serif;
@@ -43,7 +40,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ─── HEADER ─── */
 .header {
   padding: 3rem 1.5rem 2rem;
   text-align: center;
@@ -82,9 +78,7 @@ body {
   vertical-align: baseline;
 }
 
-@keyframes blink {
-  50% { opacity: 0; }
-}
+@keyframes blink { 50% { opacity: 0; } }
 
 .header .subtitle {
   font-family: var(--serif);
@@ -95,14 +89,20 @@ body {
   position: relative;
 }
 
-/* ─── CONTAINER ─── */
+.header .stats {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+  position: relative;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
 
-/* ─── SCOREBOARD ─── */
 .scoreboard-section {
   padding: 2rem 0;
   border-bottom: 1px solid var(--border);
@@ -184,15 +184,8 @@ body {
   transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.country-card .bar-fill.positive {
-  left: 50%;
-  background: var(--green);
-}
-
-.country-card .bar-fill.negative {
-  right: 50%;
-  background: var(--red);
-}
+.country-card .bar-fill.positive { left: 50%; background: var(--green); }
+.country-card .bar-fill.negative { right: 50%; background: var(--red); }
 
 .country-card .breakdown {
   margin-top: 0.5rem;
@@ -201,7 +194,6 @@ body {
   color: var(--text-muted);
 }
 
-/* ─── FILTERS ─── */
 .filters {
   padding: 1.25rem 0;
   display: flex;
@@ -225,16 +217,8 @@ body {
   transition: all 0.15s ease;
 }
 
-.filter-btn:hover {
-  border-color: var(--border-light);
-  color: var(--text);
-}
-
-.filter-btn.active {
-  background: var(--text);
-  color: var(--bg);
-  border-color: var(--text);
-}
+.filter-btn:hover { border-color: var(--border-light); color: var(--text); }
+.filter-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
 
 .filter-clear {
   font-family: var(--mono);
@@ -250,10 +234,7 @@ body {
 
 .filter-clear:hover { color: var(--text-dim); }
 
-/* ─── ACTION LIST ─── */
-.actions-section {
-  padding: 1.5rem 0 4rem;
-}
+.actions-section { padding: 1.5rem 0 4rem; }
 
 .action-count {
   font-family: var(--mono);
@@ -262,18 +243,9 @@ body {
   margin-bottom: 1rem;
 }
 
-.action-item {
-  border-bottom: 1px solid var(--border);
-  transition: background 0.15s ease;
-}
-
-.action-item:first-child {
-  border-top: 1px solid var(--border);
-}
-
-.action-item:hover {
-  background: rgba(255,255,255,0.01);
-}
+.action-item { border-bottom: 1px solid var(--border); transition: background 0.15s ease; }
+.action-item:first-child { border-top: 1px solid var(--border); }
+.action-item:hover { background: rgba(255,255,255,0.015); }
 
 .action-header {
   display: grid;
@@ -284,8 +256,6 @@ body {
   align-items: start;
 }
 
-.action-left {}
-
 .action-title {
   font-family: var(--serif);
   font-size: 0.95rem;
@@ -293,6 +263,13 @@ body {
   color: var(--text);
   line-height: 1.4;
   margin-bottom: 0.4rem;
+}
+
+.action-eo {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  margin-right: 0.5rem;
 }
 
 .action-meta {
@@ -313,14 +290,23 @@ body {
   border: 1px solid;
 }
 
-.cat-multilateral { color: #818cf8; border-color: #312e81; background: rgba(129,140,248,0.08); }
-.cat-aid { color: #34d399; border-color: #064e3b; background: rgba(52,211,153,0.08); }
-.cat-diplomatic { color: #60a5fa; border-color: #1e3a5f; background: rgba(96,165,250,0.08); }
-.cat-terrorist { color: #f97316; border-color: #7c2d12; background: rgba(249,115,22,0.08); }
+.cat-government-reform { color: #94a3b8; border-color: #334155; background: rgba(148,163,184,0.08); }
+.cat-domestic-policy { color: #94a3b8; border-color: #334155; background: rgba(148,163,184,0.06); }
+.cat-foreign-policy { color: #60a5fa; border-color: #1e3a5f; background: rgba(96,165,250,0.08); }
+.cat-energy { color: #fb923c; border-color: #7c2d12; background: rgba(251,146,60,0.08); }
+.cat-multilateral-withdrawals { color: #818cf8; border-color: #312e81; background: rgba(129,140,248,0.08); }
+.cat-terrorist-designations { color: #f97316; border-color: #7c2d12; background: rgba(249,115,22,0.08); }
+.cat-immigration { color: #a78bfa; border-color: #3b0764; background: rgba(167,139,250,0.08); }
+.cat-defense { color: #38bdf8; border-color: #0c4a6e; background: rgba(56,189,248,0.08); }
+.cat-technology { color: #2dd4bf; border-color: #134e4a; background: rgba(45,212,191,0.08); }
 .cat-tariffs { color: #fbbf24; border-color: #78350f; background: rgba(251,191,36,0.08); }
-.cat-direct { color: #22c55e; border-color: #14532d; background: rgba(34,197,94,0.08); }
-.cat-military { color: #ef4444; border-color: #7f1d1d; background: rgba(239,68,68,0.08); }
-.cat-security { color: #a78bfa; border-color: #3b0764; background: rgba(167,139,250,0.08); }
+.cat-foreign-aid { color: #34d399; border-color: #064e3b; background: rgba(52,211,153,0.08); }
+.cat-trade { color: #fbbf24; border-color: #78350f; background: rgba(251,191,36,0.06); }
+.cat-education { color: #c084fc; border-color: #581c87; background: rgba(192,132,252,0.08); }
+.cat-healthcare { color: #fb7185; border-color: #881337; background: rgba(251,113,133,0.08); }
+.cat-economic-policy { color: #a3e635; border-color: #365314; background: rgba(163,230,53,0.08); }
+.cat-law-enforcement { color: #f43f5e; border-color: #881337; background: rgba(244,63,94,0.08); }
+.cat-military-operations { color: #ef4444; border-color: #7f1d1d; background: rgba(239,68,68,0.08); }
 
 .action-date {
   font-family: var(--mono);
@@ -344,10 +330,7 @@ body {
   transition: transform 0.15s ease;
 }
 
-.impact-dot:hover {
-  transform: scale(1.6);
-  z-index: 1;
-}
+.impact-dot:hover { transform: scale(1.6); z-index: 1; }
 
 .impact-dot .tooltip {
   display: none;
@@ -367,13 +350,10 @@ body {
   z-index: 10;
 }
 
-.impact-dot:hover .tooltip {
-  display: block;
-}
+.impact-dot:hover .tooltip { display: block; }
 
 .dot-sp { background: var(--green-strong); }
 .dot-p { background: var(--green); opacity: 0.7; }
-.dot-m { background: var(--yellow); opacity: 0.6; }
 .dot-n { background: var(--neutral-dot); }
 .dot-neg { background: var(--red); opacity: 0.7; }
 .dot-sn { background: var(--red-strong); }
@@ -383,64 +363,52 @@ body {
   box-shadow: 0 0 0 2px var(--bg), 0 0 0 3px var(--text-dim);
 }
 
-/* ─── EXPANDED DETAIL ─── */
 .action-detail {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.action-item.expanded .action-detail {
-  max-height: 600px;
-}
+.action-item.expanded .action-detail { max-height: 800px; }
 
-.action-detail-inner {
-  padding: 0 0 1.25rem;
-}
+.action-detail-inner { padding: 0 0 1.25rem; }
 
 .impact-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 6px;
   margin-bottom: 1rem;
 }
 
 .impact-cell {
   font-family: var(--mono);
-  font-size: 0.65rem;
-  padding: 0.4rem 0.6rem;
+  font-size: 0.6rem;
+  padding: 0.5rem 0.6rem;
   border-radius: 3px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   background: var(--surface);
   border: 1px solid var(--border);
 }
 
-.impact-cell .country-label { color: var(--text-dim); }
-.impact-cell .impact-label { font-weight: 700; }
-.impact-cell .impact-label.positive { color: var(--green); }
-.impact-cell .impact-label.negative { color: var(--red); }
-.impact-cell .impact-label.mixed { color: var(--yellow); }
-.impact-cell .impact-label.neutral { color: var(--text-muted); }
+.impact-cell .cell-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
 
-.action-argument {
+.impact-cell .country-label { color: var(--text-dim); font-weight: 700; }
+.impact-cell .score-label { font-weight: 800; }
+.impact-cell .score-label.s-pos { color: var(--green); }
+.impact-cell .score-label.s-neg { color: var(--red); }
+.impact-cell .score-label.s-zero { color: var(--text-muted); }
+
+.impact-cell .reason {
   font-family: var(--serif);
-  font-size: 0.85rem;
-  color: var(--text-dim);
-  line-height: 1.6;
-  margin-bottom: 0.75rem;
-}
-
-.action-source {
-  font-family: var(--mono);
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   color: var(--text-muted);
+  line-height: 1.4;
 }
 
-.action-source span { color: var(--text-dim); }
-
-/* ─── EXPAND INDICATOR ─── */
 .expand-icon {
   font-family: var(--mono);
   font-size: 0.7rem;
@@ -449,46 +417,33 @@ body {
   align-self: center;
 }
 
-.action-item.expanded .expand-icon {
-  transform: rotate(90deg);
+.action-item.expanded .expand-icon { transform: rotate(90deg); }
+
+.loading {
+  text-align: center;
+  padding: 4rem;
+  font-family: var(--mono);
+  color: var(--text-muted);
 }
 
-/* ─── RESPONSIVE ─── */
 @media (max-width: 640px) {
   .header { padding: 2rem 1rem 1.5rem; }
   .container { padding: 0 1rem; }
-
-  .scoreboard {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 6px;
-  }
-
+  .scoreboard { grid-template-columns: repeat(2, 1fr); gap: 6px; }
   .country-card { padding: 0.75rem; }
   .country-card .score { font-size: 1.4rem; }
-
-  .action-header {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-  }
-
+  .action-header { grid-template-columns: 1fr; gap: 0.5rem; }
   .impact-dots { order: -1; }
-
-  .impact-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .impact-grid { grid-template-columns: 1fr; }
 }
 
-/* ─── STAGGER ANIMATIONS ─── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.country-card {
-  animation: fadeUp 0.4s ease forwards;
-}
+.country-card { animation: fadeUp 0.4s ease forwards; }
 
-/* ─── FOOTER ─── */
 .footer {
   padding: 2rem 0;
   border-top: 1px solid var(--border);
@@ -505,7 +460,8 @@ body {
 
 <header class="header">
   <h1>america first?<span class="cursor"></span></h1>
-  <p class="subtitle">Tracking the global impact of U.S. foreign policy actions, 2025 &ndash; 2026</p>
+  <p class="subtitle">Tracking the global impact of U.S. executive actions, 2025 &ndash; 2026</p>
+  <p class="stats" id="stats"></p>
 </header>
 
 <div class="container">
@@ -520,97 +476,37 @@ body {
 
   <section class="actions-section">
     <div class="action-count" id="action-count"></div>
-    <div id="action-list"></div>
+    <div id="action-list"><div class="loading">Loading 263 actions...</div></div>
   </section>
 
   <footer class="footer">
-    Data sourced from White House Executive Orders, Federal Register, and Pentagon statements.
+    263 executive orders and military actions evaluated across 10 countries.
+    <br>Data sourced from the <a href="https://www.federalregister.gov/presidential-documents/executive-orders/donald-trump/2025">Federal Register</a>, White House, and Pentagon statements.
     <br>Built for <a href="https://apps.notdone.dev">notdone.dev</a>
   </footer>
 </div>
 
 <script>
-const ACTIONS = [
-  {id:1,title:"Putting America First In International Environmental Agreements (Paris Agreement withdrawal)",date:"2025-01-20",category:"Multilateral Withdrawals",impacts:{Israel:"Positive",Germany:"Mixed",UK:"Mixed",Japan:"Mixed","South Korea":"Mixed",Australia:"Mixed",Canada:"Mixed",China:"Neutral",Russia:"Neutral",Iran:"Neutral"},argument:"Israel: Aligns with focus on security threats over multilateral climate pacts. Germany/UK/Japan/etc.: Creates diplomatic friction as climate leaders lose U.S. partnership; no direct security harm.",source:"White House EO; Federal Register 2025 list"},
-  {id:2,title:"Withdrawing the United States from the World Health Organization",date:"2025-01-20",category:"Multilateral Withdrawals",impacts:{Israel:"Positive",Germany:"Neutral",UK:"Neutral",Japan:"Neutral","South Korea":"Neutral",Australia:"Neutral",Canada:"Neutral",China:"Neutral",Russia:"Neutral",Iran:"Neutral"},argument:"Israel: Reduces funding to body long criticized for anti-Israel bias in resolutions. Others: Minimal direct effect.",source:"White House EO; Federal Register"},
-  {id:3,title:"Reevaluating And Realigning United States Foreign Aid (EO 14169 \u2014 Israel exemptions)",date:"2025-01-20",category:"Foreign Aid",impacts:{Israel:"Strongly Positive",Germany:"Neutral",UK:"Neutral",Japan:"Neutral","South Korea":"Neutral",Australia:"Neutral",Canada:"Neutral",China:"Neutral",Russia:"Neutral",Iran:"Neutral"},argument:"Israel: Explicit protection of $3.8B+ annual military aid strengthens deterrence vs. Iran/Hezbollah. Others: No major cuts reported.",source:"White House EO 14169; Federal Register"},
-  {id:4,title:"Withdrawing the United States From and Ending Funding to Certain United Nations Organizations (incl. UNHRC)",date:"2025-02-04",category:"Multilateral Withdrawals",impacts:{Israel:"Positive",Germany:"Mixed",UK:"Mixed",Japan:"Mixed","South Korea":"Mixed",Australia:"Mixed",Canada:"Mixed",China:"Neutral",Russia:"Neutral",Iran:"Neutral"},argument:"Israel: Cuts support for bodies with documented anti-Israel bias. Germany/UK/etc.: Reduces multilateral influence they value.",source:"White House EO; Federal Register"},
-  {id:5,title:"One Voice for America\u2019s Foreign Relations (centralizing diplomacy)",date:"2025-02-12",category:"Diplomatic Policy",impacts:{Israel:"Positive",Germany:"Mixed",UK:"Mixed",Japan:"Mixed","South Korea":"Mixed",Australia:"Mixed",Canada:"Mixed",China:"Strongly Negative",Russia:"Strongly Negative",Iran:"Strongly Negative"},argument:"Israel: Streamlines transactional pro-Israel approach. Allies: More unpredictable U.S. policy. Adversaries: Direct pressure.",source:"White House EO 14212"},
-  {id:6,title:"America First Policy Directive To The Secretary Of State",date:"2025-01-20",category:"Diplomatic Policy",impacts:{Israel:"Positive",Germany:"Neutral",UK:"Neutral",Japan:"Neutral","South Korea":"Neutral",Australia:"Neutral",Canada:"Neutral",China:"Neutral",Russia:"Neutral",Iran:"Neutral"},argument:"Israel: Prioritizes strong bilateral allies like Israel. Others: Neutral baseline shift.",source:"White House / Federal Register"},
-  {id:7,title:"Designating Cartels And Other Organizations As Foreign Terrorist Organizations (incl. Hezbollah links)",date:"2025-01-20",category:"Terrorist Designations",impacts:{Israel:"Positive",Germany:"Neutral",UK:"Neutral",Japan:"Neutral","South Korea":"Neutral",Australia:"Neutral",Canada:"Neutral",China:"Strongly Negative",Russia:"Strongly Negative",Iran:"Strongly Negative"},argument:"Israel: Targets Hezbollah financing routes. Adversaries: Disrupts networks.",source:"White House"},
-  {id:8,title:"Designation of Ansar Allah (Houthis) As A Foreign Terrorist Organization",date:"2025",category:"Terrorist Designations",impacts:{Israel:"Positive",Germany:"Neutral",UK:"Neutral",Japan:"Neutral","South Korea":"Neutral",Australia:"Neutral",Canada:"Neutral",China:"Strongly Negative",Russia:"Strongly Negative",Iran:"Strongly Negative"},argument:"Israel: Enables strikes on Iran-backed proxy attacking Israel/shipping. Adversaries: Weakens proxy.",source:"White House"},
-  {id:9,title:"Regulating Imports with a Reciprocal Tariff To Rectify Trade Practices (EO 14257)",date:"2025-04-02",category:"Tariffs as Leverage",impacts:{Israel:"Mixed",Germany:"Negative",UK:"Negative",Japan:"Negative","South Korea":"Negative",Australia:"Negative",Canada:"Negative",China:"Strongly Negative",Russia:"Strongly Negative",Iran:"Strongly Negative"},argument:"Israel: Secondary pressure on Iran benefits security. Allies: Hits exports (autos, machinery). Adversaries: Economic isolation.",source:"Federal Register EO 14257"},
-  {id:10,title:"Imposing Tariffs on Countries Importing Venezuelan Oil (EO 14245)",date:"2025",category:"Tariffs as Leverage",impacts:{Israel:"Positive",Germany:"Neutral",UK:"Neutral",Japan:"Neutral","South Korea":"Neutral",Australia:"Neutral",Canada:"Neutral",China:"Strongly Negative",Russia:"Strongly Negative",Iran:"Strongly Negative"},argument:"Israel: Disrupts Iran-Venezuela oil/arms axis. Adversaries: Starves revenue.",source:"White House / Federal Register EO 14245"},
-  {id:11,title:"Continuing the Suspension of Duty-Free De Minimis Treatment for All Countries",date:"2025-07-30",category:"Tariffs as Leverage",impacts:{Israel:"Mixed",Germany:"Negative",UK:"Negative",Japan:"Negative","South Korea":"Negative",Australia:"Negative",Canada:"Negative",China:"Strongly Negative",Russia:"Strongly Negative",Iran:"Strongly Negative"},argument:"Allies: Curbs low-value imports from adversaries but raises costs. Adversaries: Major trade disruption.",source:"White House EO 14323 & continuation"},
-  {id:12,title:"Addressing Threats to the United States by the Government of Cuba (EO 14380)",date:"2026-01-29",category:"Tariffs as Leverage",impacts:{Israel:"Positive",Germany:"Neutral",UK:"Neutral",Japan:"Neutral","South Korea":"Neutral",Australia:"Neutral",Canada:"Neutral",China:"Strongly Negative",Russia:"Strongly Negative",Iran:"Strongly Negative"},argument:"Israel: Adds pressure on minor Iranian ally network. Adversaries: Economic squeeze.",source:"Federal Register EO 14380"},
-  {id:13,title:"Addressing Threats to the United States by the Government of Iran (EO 14382 \u2014 secondary tariffs)",date:"2026-02-06",category:"Tariffs as Leverage",impacts:{Israel:"Strongly Positive",Germany:"Negative",UK:"Negative",Japan:"Negative","South Korea":"Negative",Australia:"Negative",Canada:"Negative",China:"Strongly Negative",Russia:"Strongly Negative",Iran:"Strongly Negative"},argument:"Israel: Direct economic isolation of Iran reduces funding for proxies/nuclear program. Allies: Secondary trade costs. Adversaries: Revenue loss.",source:"Federal Register EO 14382"},
-  {id:14,title:"Ending Certain Tariff Actions (partial termination of IEEPA duties)",date:"2026-02-20",category:"Tariffs as Leverage",impacts:{Israel:"Mixed",Germany:"Mixed",UK:"Mixed",Japan:"Mixed","South Korea":"Mixed",Australia:"Mixed",Canada:"Mixed",China:"Strongly Negative",Russia:"Strongly Negative",Iran:"Strongly Negative"},argument:"Israel: Preserves core pressure tools on adversaries. Allies: Some relief. Adversaries: Continued leverage.",source:"White House EO Feb 20 2026"},
-  {id:15,title:"Establishing an America First Arms Transfer Strategy",date:"2026-02",category:"Direct Support",impacts:{Israel:"Strongly Positive",Germany:"Neutral",UK:"Neutral",Japan:"Neutral","South Korea":"Neutral",Australia:"Neutral",Canada:"Neutral",China:"Neutral",Russia:"Neutral",Iran:"Neutral"},argument:"Israel: Accelerates arms sales and maintains qualitative military edge. Others: Neutral or minor industrial tie-ins.",source:"White House"},
-  {id:16,title:"Imposing Sanctions on the International Criminal Court (ICC)",date:"2025-02",category:"Direct Support",impacts:{Israel:"Strongly Positive",Germany:"Neutral",UK:"Neutral",Japan:"Neutral","South Korea":"Neutral",Australia:"Neutral",Canada:"Neutral",China:"Neutral",Russia:"Neutral",Iran:"Neutral"},argument:"Israel: Blocks arrest warrants against leaders/officials. Others: No major effect.",source:"White House EO"},
-  {id:17,title:"Reversal of Biden-era sanctions on Israeli settlers",date:"2025",category:"Direct Support",impacts:{Israel:"Positive",Germany:"Neutral",UK:"Neutral",Japan:"Neutral","South Korea":"Neutral",Australia:"Neutral",Canada:"Neutral",China:"Neutral",Russia:"Neutral",Iran:"Neutral"},argument:"Israel: Restores legitimacy for operations in disputed areas. Others: Neutral.",source:"White House announcement"},
-  {id:18,title:"Operation Epic Fury (joint U.S.\u2013Israel strikes on Iran \u2014 leadership/nuclear targets hit)",date:"2026-02-28",category:"Military Operations",impacts:{Israel:"Strongly Positive",Germany:"Mixed",UK:"Mixed",Japan:"Mixed","South Korea":"Mixed",Australia:"Mixed",Canada:"Mixed",China:"Strongly Negative",Russia:"Strongly Negative",Iran:"Strongly Negative"},argument:"Israel: Major degradation of existential nuclear/missile/proxy threats. Allies: Concern over escalation/oil prices. Adversaries: Direct military defeat.",source:"White House / Pentagon statements (Feb\u2013Mar 2026)"},
-  {id:19,title:"Military Operation in Venezuela (Maduro and wife captured)",date:"2026-01-03",category:"Military Operations",impacts:{Israel:"Positive",Germany:"Neutral",UK:"Neutral",Japan:"Neutral","South Korea":"Neutral",Australia:"Neutral",Canada:"Neutral",China:"Strongly Negative",Russia:"Strongly Negative",Iran:"Strongly Negative"},argument:"Israel: Removes key Iranian oil/arms ally, disrupts network. Adversaries: Loss of partner and revenue.",source:"White House statements / Pentagon (Jan 2026)"},
-  {id:20,title:"Houthi Strikes in Yemen (under FTO designation)",date:"2025",category:"Military Operations",impacts:{Israel:"Positive",Germany:"Neutral",UK:"Neutral",Japan:"Neutral","South Korea":"Neutral",Australia:"Neutral",Canada:"Neutral",China:"Strongly Negative",Russia:"Strongly Negative",Iran:"Strongly Negative"},argument:"Israel: Weakens Iran-backed proxy attacking Israel/shipping. Adversaries: Proxy degradation.",source:"Pentagon statements"},
-  {id:21,title:"NATO burden-sharing pressure & European defense spending demands",date:"2025\u20132026",category:"Security Policy",impacts:{Israel:"Neutral",Germany:"Mixed",UK:"Mixed",Japan:"Mixed","South Korea":"Mixed",Australia:"Mixed",Canada:"Mixed",China:"Neutral",Russia:"Strongly Negative",Iran:"Neutral"},argument:"Israel: Indirect benefit if Europe strengthens vs. shared threats. Allies: Economic strain from higher spending. Russia: Viewed as aggressive.",source:"White House statements"}
-];
-
 const COUNTRIES = ["Israel","Germany","UK","Japan","South Korea","Australia","Canada","China","Russia","Iran"];
 
-const SCORE_MAP = {
-  "Strongly Positive": 2,
-  "Positive": 1,
-  "Positive (indirect)": 1,
-  "Mixed": 0,
-  "Mixed (mostly Positive)": 0.5,
-  "Neutral": 0,
-  "Neutral/Mixed": 0,
-  "Negative": -1,
-  "Strongly Negative": -2
-};
+const SCORE_LABEL = {2:"+2",1:"+1",0:"0","-1":"-1","-2":"-2"};
+const SCORE_NAME = {2:"Strongly Positive",1:"Positive",0:"Neutral","-1":"Negative","-2":"Strongly Negative"};
 
-const DOT_CLASS = {
-  "Strongly Positive": "dot-sp",
-  "Positive": "dot-p",
-  "Positive (indirect)": "dot-p",
-  "Mixed": "dot-m",
-  "Mixed (mostly Positive)": "dot-m",
-  "Neutral": "dot-n",
-  "Neutral/Mixed": "dot-n",
-  "Negative": "dot-neg",
-  "Strongly Negative": "dot-sn"
-};
+const DOT_CLASS = s => s >= 2 ? 'dot-sp' : s === 1 ? 'dot-p' : s === 0 ? 'dot-n' : s === -1 ? 'dot-neg' : 'dot-sn';
+const SCORE_CLS = s => s > 0 ? 's-pos' : s < 0 ? 's-neg' : 's-zero';
 
-const IMPACT_CLASS = v => {
-  if (v.includes("Positive")) return "positive";
-  if (v.includes("Negative")) return "negative";
-  if (v === "Mixed" || v.includes("Mixed")) return "mixed";
-  return "neutral";
-};
+const CAT_SLUG = c => 'cat-' + c.toLowerCase().replace(/[^a-z]+/g, '-').replace(/-$/, '');
 
-const CAT_CLASS = {
-  "Multilateral Withdrawals": "cat-multilateral",
-  "Foreign Aid": "cat-aid",
-  "Diplomatic Policy": "cat-diplomatic",
-  "Terrorist Designations": "cat-terrorist",
-  "Tariffs as Leverage": "cat-tariffs",
-  "Direct Support": "cat-direct",
-  "Military Operations": "cat-military",
-  "Security Policy": "cat-security"
-};
-
-// ── State ──
+let ACTIONS = [];
 let activeCountry = null;
 let activeCategory = null;
 
-// ── Compute scores ──
 function computeScores() {
   const scores = {};
   COUNTRIES.forEach(c => {
-    let total = 0;
-    let pos = 0, neg = 0;
+    let total = 0, pos = 0, neg = 0;
     ACTIONS.forEach(a => {
-      const v = a.impacts[c];
-      const s = SCORE_MAP[v] || 0;
+      const s = a.impacts[c] || 0;
       total += s;
       if (s > 0) pos += s;
       if (s < 0) neg += Math.abs(s);
@@ -620,7 +516,6 @@ function computeScores() {
   return scores;
 }
 
-// ── Render scoreboard ──
 function renderScoreboard() {
   const scores = computeScores();
   const sorted = COUNTRIES.slice().sort((a, b) => scores[b].total - scores[a].total);
@@ -654,9 +549,8 @@ function renderScoreboard() {
   });
 }
 
-// ── Render filters ──
 function renderFilters() {
-  const cats = [...new Set(ACTIONS.map(a => a.category))];
+  const cats = [...new Set(ACTIONS.map(a => a.category))].sort();
   const el = document.getElementById('filters');
   el.innerHTML = `<div class="section-label" style="margin-bottom:0;">Category</div>` +
     cats.map(c => `<button class="filter-btn${activeCategory === c ? ' active' : ''}" data-cat="${c}">${c}</button>`).join('') +
@@ -680,7 +574,6 @@ function renderFilters() {
   });
 }
 
-// ── Render actions ──
 function renderActions() {
   let filtered = ACTIONS;
   if (activeCategory) filtered = filtered.filter(a => a.category === activeCategory);
@@ -691,28 +584,34 @@ function renderActions() {
     (activeCategory ? ` \u00b7 ${activeCategory}` : '');
 
   const el = document.getElementById('action-list');
-  el.innerHTML = filtered.map((a, i) => {
+  el.innerHTML = filtered.map(a => {
     const dots = COUNTRIES.map(c => {
-      const v = a.impacts[c];
+      const s = a.impacts[c] || 0;
       const highlighted = activeCountry === c ? ' highlighted' : '';
-      return `<div class="impact-dot ${DOT_CLASS[v] || 'dot-n'}${highlighted}" title="${c}: ${v}"><div class="tooltip">${c}: ${v}</div></div>`;
+      return `<div class="impact-dot ${DOT_CLASS(s)}${highlighted}"><div class="tooltip">${c}: ${SCORE_NAME[s] || 'Neutral'}</div></div>`;
     }).join('');
 
-    const catCls = CAT_CLASS[a.category] || '';
+    const catCls = CAT_SLUG(a.category);
+    const eoLabel = a.eo !== 'N/A' ? `<span class="action-eo">EO ${a.eo}</span>` : '';
 
     const impactGrid = COUNTRIES.map(c => {
-      const v = a.impacts[c];
+      const s = a.impacts[c] || 0;
+      const reason = a.reasons[c] || '';
       return `<div class="impact-cell">
-        <span class="country-label">${c}</span>
-        <span class="impact-label ${IMPACT_CLASS(v)}">${v.replace('Strongly ', 'S.')}</span>
+        <div class="cell-header">
+          <span class="country-label">${c}</span>
+          <span class="score-label ${SCORE_CLS(s)}">${s > 0 ? '+' : ''}${s} ${SCORE_NAME[s] || 'Neutral'}</span>
+        </div>
+        <div class="reason">${reason}</div>
       </div>`;
     }).join('');
 
-    return `<div class="action-item" style="animation-delay:${i * 30}ms">
+    return `<div class="action-item">
       <div class="action-header" data-id="${a.id}">
         <div class="action-left">
           <div class="action-title">${a.title}</div>
           <div class="action-meta">
+            ${eoLabel}
             <span class="category-badge ${catCls}">${a.category}</span>
             <span class="action-date">${a.date}</span>
           </div>
@@ -725,8 +624,6 @@ function renderActions() {
       <div class="action-detail">
         <div class="action-detail-inner">
           <div class="impact-grid">${impactGrid}</div>
-          <div class="action-argument">${a.argument}</div>
-          <div class="action-source">Source: <span>${a.source}</span></div>
         </div>
       </div>
     </div>`;
@@ -739,10 +636,16 @@ function renderActions() {
   });
 }
 
-// ── Init ──
-renderScoreboard();
-renderFilters();
-renderActions();
+fetch('data.json')
+  .then(r => r.json())
+  .then(data => {
+    ACTIONS = data;
+    document.getElementById('stats').textContent =
+      `${ACTIONS.length} executive orders & military actions \u00b7 10 countries \u00b7 ${ACTIONS.length * 10} evaluations`;
+    renderScoreboard();
+    renderFilters();
+    renderActions();
+  });
 </script>
 
 </body>
