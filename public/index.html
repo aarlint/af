@@ -194,6 +194,13 @@ body {
   color: var(--text-muted);
 }
 
+.sparkline {
+  width: 100%;
+  height: 28px;
+  margin-top: 0.5rem;
+  display: block;
+}
+
 .filters {
   padding: 1.25rem 0;
   border-bottom: 1px solid var(--border);
@@ -682,18 +689,41 @@ let searchQuery = '';
 let sortMode = 'date'; // 'date', 'impact-desc', 'impact-asc'
 
 function computeScores() {
+  const sorted = [...ACTIONS].sort((a, b) => a.date.localeCompare(b.date));
   const scores = {};
   COUNTRIES.forEach(c => {
     let total = 0, pos = 0, neg = 0;
-    ACTIONS.forEach(a => {
+    const cumulative = [];
+    sorted.forEach(a => {
       const s = a.impacts[c] || 0;
       total += s;
       if (s > 0) pos += s;
       if (s < 0) neg += Math.abs(s);
+      cumulative.push(total);
     });
-    scores[c] = { total, pos, neg };
+    scores[c] = { total, pos, neg, cumulative };
   });
   return scores;
+}
+
+function sparklineSVG(points, color) {
+  if (!points.length) return '';
+  const w = 120, h = 28, pad = 2;
+  const min = Math.min(...points, 0);
+  const max = Math.max(...points, 0);
+  const range = max - min || 1;
+  const xStep = (w - pad * 2) / (points.length - 1 || 1);
+  const coords = points.map((v, i) => {
+    const x = pad + i * xStep;
+    const y = pad + (1 - (v - min) / range) * (h - pad * 2);
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  });
+  // zero line
+  const zeroY = (pad + (1 - (0 - min) / range) * (h - pad * 2)).toFixed(1);
+  return `<svg viewBox="0 0 ${w} ${h}" class="sparkline" preserveAspectRatio="none">
+    <line x1="${pad}" y1="${zeroY}" x2="${w - pad}" y2="${zeroY}" stroke="var(--border)" stroke-width="0.5" stroke-dasharray="2,2"/>
+    <polyline points="${coords.join(' ')}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+  </svg>`;
 }
 
 function renderScoreboard() {
@@ -708,13 +738,11 @@ function renderScoreboard() {
     const cls = s.total > 0 ? 'positive' : s.total < 0 ? 'negative' : 'zero';
     const posW = (s.pos / maxAbs) * 50;
     const negW = (s.neg / maxAbs) * 50;
+    const sparkColor = s.total > 0 ? 'var(--green)' : s.total < 0 ? 'var(--red)' : 'var(--text-muted)';
     return `<div class="country-card${activeCountry === c ? ' active' : ''}" data-country="${c}" style="animation-delay:${i * 40}ms">
       <div class="name">${c}</div>
       <div class="score ${cls}">${sign}${s.total}</div>
-      <div class="bar-track">
-        <div class="bar-fill positive" style="width:${posW}%"></div>
-        <div class="bar-fill negative" style="width:${negW}%"></div>
-      </div>
+      ${sparklineSVG(s.cumulative, sparkColor)}
       <div class="breakdown">${s.pos > 0 ? '+' + s.pos + ' fav' : ''} ${s.neg > 0 ? '\u2212' + s.neg + ' adv' : ''}</div>
     </div>`;
   }).join('');
