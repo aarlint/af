@@ -1,3 +1,7 @@
 node_modules
 .git
 .github
+.claude
+research
+af.db
+af

@@ -103,6 +103,163 @@ body {
   padding: 0 1.5rem;
 }
 
+/* President cards */
+.presidents-section {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.presidents-row {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.president-card {
+  flex: 1;
+  min-width: 180px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.president-card:hover {
+  background: var(--surface-hover);
+  border-color: var(--border-light);
+  transform: translateY(-1px);
+}
+
+.president-card.active {
+  border-color: var(--text-dim);
+  background: var(--surface-hover);
+}
+
+.president-card .pres-name {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--text);
+  margin-bottom: 0.15rem;
+}
+
+.president-card .pres-term {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.president-card .pres-stats {
+  display: flex;
+  gap: 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+}
+
+.president-card .pres-actions { color: var(--text-dim); }
+.president-card .pres-net { font-weight: 700; }
+.president-card .pres-net.positive { color: var(--green); }
+.president-card .pres-net.negative { color: var(--red); }
+.president-card .pres-net.zero { color: var(--text-muted); }
+
+/* Info section */
+.info-section {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.info-toggle {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  cursor: pointer;
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.info-toggle:hover { color: var(--text-dim); }
+
+.info-toggle .arrow {
+  transition: transform 0.2s ease;
+  font-size: 0.6rem;
+}
+
+.info-section.open .info-toggle .arrow { transform: rotate(90deg); }
+
+.info-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.info-section.open .info-content { max-height: 600px; }
+
+.info-inner {
+  padding-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.info-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+.info-card h3 {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+}
+
+.info-card p {
+  font-family: var(--serif);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.info-card .score-scale {
+  display: flex;
+  gap: 6px;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.info-card .score-chip {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 2px;
+}
+
+.score-chip.sp { background: rgba(34,197,94,0.15); color: var(--green-strong); }
+.score-chip.p { background: rgba(74,222,128,0.1); color: var(--green); }
+.score-chip.n { background: rgba(82,82,91,0.2); color: var(--text-muted); }
+.score-chip.neg { background: rgba(248,113,113,0.1); color: var(--red); }
+.score-chip.sn { background: rgba(239,68,68,0.15); color: var(--red-strong); }
+
+/* Scoreboard */
 .scoreboard-section {
   padding: 2rem 0;
   border-bottom: 1px solid var(--border);
@@ -133,6 +290,7 @@ body {
   transition: all 0.2s ease;
   position: relative;
   overflow: hidden;
+  animation: fadeUp 0.4s ease forwards;
 }
 
 .country-card:hover {
@@ -201,6 +359,7 @@ body {
   display: block;
 }
 
+/* Filters */
 .filters {
   padding: 1.25rem 0;
   border-bottom: 1px solid var(--border);
@@ -282,6 +441,7 @@ body {
 
 .sort-select:focus { border-color: var(--border-light); }
 
+/* Actions */
 .actions-section { padding: 1.5rem 0 4rem; }
 
 .action-count {
@@ -353,6 +513,19 @@ a.action-eo:hover { color: #60a5fa; }
   border: 1px solid;
 }
 
+.president-badge {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.4rem;
+  border-radius: 2px;
+  background: rgba(96,165,250,0.1);
+  color: #60a5fa;
+  border: 1px solid rgba(96,165,250,0.2);
+}
+
 .cat-government-reform { color: #94a3b8; border-color: #334155; background: rgba(148,163,184,0.08); }
 .cat-domestic-policy { color: #94a3b8; border-color: #334155; background: rgba(148,163,184,0.06); }
 .cat-foreign-policy { color: #60a5fa; border-color: #1e3a5f; background: rgba(96,165,250,0.08); }
@@ -370,6 +543,10 @@ a.action-eo:hover { color: #60a5fa; }
 .cat-economic-policy { color: #a3e635; border-color: #365314; background: rgba(163,230,53,0.08); }
 .cat-law-enforcement { color: #f43f5e; border-color: #881337; background: rgba(244,63,94,0.08); }
 .cat-military-operations { color: #ef4444; border-color: #7f1d1d; background: rgba(239,68,68,0.08); }
+.cat-environment { color: #34d399; border-color: #064e3b; background: rgba(52,211,153,0.08); }
+.cat-civil-rights { color: #c084fc; border-color: #581c87; background: rgba(192,132,252,0.06); }
+.cat-pandemic-response { color: #fb7185; border-color: #881337; background: rgba(251,113,133,0.06); }
+.cat-international-agreements { color: #818cf8; border-color: #312e81; background: rgba(129,140,248,0.06); }
 
 .action-date {
   font-family: var(--mono);
@@ -498,14 +675,14 @@ a.action-eo:hover { color: #60a5fa; }
   .action-header { grid-template-columns: 1fr; gap: 0.5rem; }
   .impact-dots { order: -1; }
   .impact-grid { grid-template-columns: 1fr; }
+  .presidents-row { gap: 6px; }
+  .president-card { min-width: 150px; padding: 0.65rem 0.75rem; }
 }
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
-.country-card { animation: fadeUp 0.4s ease forwards; }
 
 .footer {
   padding: 2rem 0;
@@ -517,107 +694,22 @@ a.action-eo:hover { color: #60a5fa; }
 }
 
 .footer a { color: var(--text-dim); }
-
-.info-section {
-  padding: 1.5rem 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.info-toggle {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  cursor: pointer;
-  background: none;
-  border: none;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-}
-
-.info-toggle:hover { color: var(--text-dim); }
-
-.info-toggle .arrow {
-  transition: transform 0.2s ease;
-  font-size: 0.6rem;
-}
-
-.info-section.open .info-toggle .arrow { transform: rotate(90deg); }
-
-.info-content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.info-section.open .info-content { max-height: 600px; }
-
-.info-inner {
-  padding-top: 1rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem;
-}
-
-.info-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 1rem;
-}
-
-.info-card h3 {
-  font-family: var(--mono);
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  margin-bottom: 0.5rem;
-}
-
-.info-card p {
-  font-family: var(--serif);
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  line-height: 1.5;
-}
-
-.info-card .score-scale {
-  display: flex;
-  gap: 6px;
-  margin-top: 0.5rem;
-  flex-wrap: wrap;
-}
-
-.info-card .score-chip {
-  font-family: var(--mono);
-  font-size: 0.6rem;
-  font-weight: 700;
-  padding: 0.2rem 0.5rem;
-  border-radius: 2px;
-}
-
-.score-chip.sp { background: rgba(34,197,94,0.15); color: var(--green-strong); }
-.score-chip.p { background: rgba(74,222,128,0.1); color: var(--green); }
-.score-chip.n { background: rgba(82,82,91,0.2); color: var(--text-muted); }
-.score-chip.neg { background: rgba(248,113,113,0.1); color: var(--red); }
-.score-chip.sn { background: rgba(239,68,68,0.15); color: var(--red-strong); }
 </style>
 </head>
 <body>
 
 <header class="header">
   <h1>america first?<span class="cursor"></span></h1>
-  <p class="subtitle">Tracking the global impact of U.S. executive actions, 2025 &ndash; 2026</p>
+  <p class="subtitle" id="subtitle">Tracking the global impact of U.S. executive actions across administrations</p>
   <p class="stats" id="stats"></p>
 </header>
 
 <div class="container">
+  <section class="presidents-section">
+    <div class="section-label">Administrations</div>
+    <div class="presidents-row" id="presidents-row"></div>
+  </section>
+
   <section class="info-section" id="info-section">
     <button class="info-toggle" onclick="document.getElementById('info-section').classList.toggle('open')">
       <span class="arrow">&#9656;</span> About This Evaluation
@@ -626,7 +718,7 @@ a.action-eo:hover { color: #60a5fa; }
       <div class="info-inner">
         <div class="info-card">
           <h3>Data Sources</h3>
-          <p>263 actions: 251 executive orders (EO 14147&ndash;14397) from the <a href="https://www.federalregister.gov/presidential-documents/executive-orders/donald-trump/2025" style="color:var(--text-dim)">Federal Register</a>, plus 12 military operations and Pentagon directives from official statements. Covers Jan 20, 2025 through Mar 2026.</p>
+          <p>Executive orders from the <a href="https://www.federalregister.gov/presidential-documents/executive-orders" style="color:var(--text-dim)">Federal Register</a>, plus military operations and Pentagon directives from official statements. Covers multiple administrations from 2009 to present.</p>
         </div>
         <div class="info-card">
           <h3>Scoring Method</h3>
@@ -652,7 +744,7 @@ a.action-eo:hover { color: #60a5fa; }
   </section>
 
   <section class="scoreboard-section">
-    <div class="section-label">Country Impact Scoreboard</div>
+    <div class="section-label" id="scoreboard-label">Country Impact Scoreboard</div>
     <div class="scoreboard" id="scoreboard"></div>
   </section>
 
@@ -660,13 +752,11 @@ a.action-eo:hover { color: #60a5fa; }
 
   <section class="actions-section">
     <div class="action-count" id="action-count"></div>
-    <div id="action-list"><div class="loading">Loading 263 actions...</div></div>
+    <div id="action-list"><div class="loading">Loading actions...</div></div>
   </section>
 
-  <footer class="footer">
-    263 executive orders and military actions evaluated across 12 countries.
-    <br>Data sourced from the <a href="https://www.federalregister.gov/presidential-documents/executive-orders/donald-trump/2025">Federal Register</a>, White House, and Pentagon statements.
-    <br>Built for <a href="https://apps.notdone.dev">notdone.dev</a>
+  <footer class="footer" id="footer">
+    Built for <a href="https://apps.notdone.dev">notdone.dev</a>
   </footer>
 </div>
 
@@ -681,33 +771,103 @@ const SCORE_CLS = s => s > 0 ? 's-pos' : s < 0 ? 's-neg' : 's-zero';
 
 const CAT_SLUG = c => 'cat-' + c.toLowerCase().replace(/[^a-z]+/g, '-').replace(/-$/, '');
 
+const PRES_LABELS = {
+  'obama1': 'Obama I',
+  'obama2': 'Obama II',
+  'trump1': 'Trump I',
+  'biden': 'Biden',
+  'trump2': 'Trump II'
+};
+
 let ACTIONS = [];
+let PRESIDENTS = [];
+let SCORES_DATA = null;
 let activeCountry = null;
 let activeCategory = null;
-let activeImpact = null; // 'positive', 'negative', 'neutral'
+let activeImpact = null;
+let activePresident = null;
 let searchQuery = '';
-let sortMode = 'date'; // 'date', 'impact-desc', 'impact-asc'
+let sortMode = 'date';
 
-function computeScores() {
-  const sorted = [...ACTIONS].sort((a, b) => a.date.localeCompare(b.date));
-  const scores = {};
-  COUNTRIES.forEach(c => {
-    let total = 0, pos = 0, neg = 0;
-    const cumulative = [];
-    sorted.forEach(a => {
-      const s = a.impacts[c] || 0;
-      total += s;
-      if (s > 0) pos += s;
-      if (s < 0) neg += Math.abs(s);
-      cumulative.push(total);
+async function loadData() {
+  const presParam = activePresident ? `?president=${activePresident}` : '';
+
+  const [actionsRes, scoresRes] = await Promise.all([
+    fetch(`/api/actions${presParam}`).then(r => r.json()),
+    fetch(`/api/scores${presParam}`).then(r => r.json())
+  ]);
+
+  ACTIONS = actionsRes.actions;
+  PRESIDENTS = scoresRes.presidents;
+  SCORES_DATA = scoresRes;
+
+  updateStats();
+  renderPresidents();
+  renderScoreboard();
+  renderFilters();
+  renderActions();
+}
+
+function updateStats() {
+  const totalEvals = ACTIONS.length * COUNTRIES.length;
+  const label = activePresident ? PRES_LABELS[activePresident] : 'all administrations';
+  document.getElementById('stats').textContent =
+    `${ACTIONS.length} actions \u00b7 ${COUNTRIES.length} countries \u00b7 ${totalEvals} evaluations \u00b7 ${label}`;
+
+  if (activePresident) {
+    const p = PRESIDENTS.find(p => p.id === activePresident);
+    if (p) {
+      document.getElementById('subtitle').textContent =
+        `${p.name} \u2014 ${p.start_date.slice(0,4)}\u2013${p.end_date.slice(0,4)}`;
+    }
+  } else {
+    document.getElementById('subtitle').textContent =
+      'Tracking the global impact of U.S. executive actions across administrations';
+  }
+}
+
+function renderPresidents() {
+  const el = document.getElementById('presidents-row');
+
+  // Compute per-president action counts and net scores
+  const presStats = {};
+  PRESIDENTS.forEach(p => { presStats[p.id] = { count: 0, net: 0 }; });
+
+  // We need all-president data for the cards. Use SCORES_DATA if no filter, else fetch fresh.
+  // For simplicity, always show all presidents but highlight active.
+  // Action counts come from the full dataset when no filter.
+
+  el.innerHTML = PRESIDENTS.map(p => {
+    const isActive = activePresident === p.id;
+    const label = PRES_LABELS[p.id] || p.name;
+    const years = `${p.start_date.slice(0,4)}\u2013${p.end_date.slice(0,4)}`;
+
+    return `<div class="president-card${isActive ? ' active' : ''}" data-pres="${p.id}">
+      <div class="pres-name">${label}</div>
+      <div class="pres-term">${years}</div>
+    </div>`;
+  }).join('');
+
+  el.querySelectorAll('.president-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const id = card.dataset.pres;
+      activePresident = activePresident === id ? null : id;
+      activeCategory = null;
+      activeImpact = null;
+      searchQuery = '';
+      sortMode = 'date';
+      loadData();
     });
-    scores[c] = { total, pos, neg, cumulative };
   });
-  return scores;
+}
+
+function computeScoresFromData() {
+  if (!SCORES_DATA) return {};
+  return SCORES_DATA.scores;
 }
 
 function sparklineSVG(points, color) {
-  if (!points.length) return '';
+  if (!points || !points.length) return '';
   const w = 120, h = 28, pad = 2;
   const min = Math.min(...points, 0);
   const max = Math.max(...points, 0);
@@ -718,7 +878,6 @@ function sparklineSVG(points, color) {
     const y = pad + (1 - (v - min) / range) * (h - pad * 2);
     return `${x.toFixed(1)},${y.toFixed(1)}`;
   });
-  // zero line
   const zeroY = (pad + (1 - (0 - min) / range) * (h - pad * 2)).toFixed(1);
   return `<svg viewBox="0 0 ${w} ${h}" class="sparkline" preserveAspectRatio="none">
     <line x1="${pad}" y1="${zeroY}" x2="${w - pad}" y2="${zeroY}" stroke="var(--border)" stroke-width="0.5" stroke-dasharray="2,2"/>
@@ -727,23 +886,25 @@ function sparklineSVG(points, color) {
 }
 
 function renderScoreboard() {
-  const scores = computeScores();
-  const sorted = COUNTRIES.slice().sort((a, b) => scores[b].total - scores[a].total);
-  const maxAbs = Math.max(...Object.values(scores).map(s => Math.max(s.pos, s.neg)), 1);
+  const scores = computeScoresFromData();
+  const countries = SCORES_DATA ? SCORES_DATA.countries : COUNTRIES;
+  const sorted = countries.slice().sort((a, b) => (scores[b]?.total || 0) - (scores[a]?.total || 0));
+  const maxAbs = Math.max(...Object.values(scores).map(s => Math.max(s.positive || 0, s.negative || 0)), 1);
   const el = document.getElementById('scoreboard');
 
+  const presLabel = activePresident ? ` \u2014 ${PRES_LABELS[activePresident] || activePresident}` : '';
+  document.getElementById('scoreboard-label').textContent = `Country Impact Scoreboard${presLabel}`;
+
   el.innerHTML = sorted.map((c, i) => {
-    const s = scores[c];
+    const s = scores[c] || { total: 0, positive: 0, negative: 0, cumulative: [] };
     const sign = s.total > 0 ? '+' : '';
     const cls = s.total > 0 ? 'positive' : s.total < 0 ? 'negative' : 'zero';
-    const posW = (s.pos / maxAbs) * 50;
-    const negW = (s.neg / maxAbs) * 50;
     const sparkColor = s.total > 0 ? 'var(--green)' : s.total < 0 ? 'var(--red)' : 'var(--text-muted)';
     return `<div class="country-card${activeCountry === c ? ' active' : ''}" data-country="${c}" style="animation-delay:${i * 40}ms">
       <div class="name">${c}</div>
       <div class="score ${cls}">${sign}${s.total}</div>
       ${sparklineSVG(s.cumulative, sparkColor)}
-      <div class="breakdown">${s.pos > 0 ? '+' + s.pos + ' fav' : ''} ${s.neg > 0 ? '\u2212' + s.neg + ' adv' : ''}</div>
+      <div class="breakdown">${s.positive > 0 ? '+' + s.positive + ' fav' : ''} ${s.negative > 0 ? '\u2212' + s.negative + ' adv' : ''}</div>
     </div>`;
   }).join('');
 
@@ -793,7 +954,6 @@ function renderFilters() {
     </div>
     ${impactRow}`;
 
-  // Search
   const searchInput = document.getElementById('search-input');
   let searchTimeout;
   searchInput.addEventListener('input', () => {
@@ -804,13 +964,11 @@ function renderFilters() {
     }, 150);
   });
 
-  // Sort
   document.getElementById('sort-select').addEventListener('change', (e) => {
     sortMode = e.target.value;
     renderActions();
   });
 
-  // Category buttons
   el.querySelectorAll('[data-cat]').forEach(btn => {
     btn.addEventListener('click', () => {
       const c = btn.dataset.cat;
@@ -820,7 +978,6 @@ function renderFilters() {
     });
   });
 
-  // Impact buttons
   el.querySelectorAll('[data-impact]').forEach(btn => {
     btn.addEventListener('click', () => {
       const v = btn.dataset.impact;
@@ -830,16 +987,14 @@ function renderFilters() {
     });
   });
 
-  // Clear all
   document.getElementById('clear-filters').addEventListener('click', () => {
     activeCategory = null;
     activeCountry = null;
     activeImpact = null;
+    activePresident = null;
     searchQuery = '';
     sortMode = 'date';
-    renderFilters();
-    renderScoreboard();
-    renderActions();
+    loadData();
   });
 }
 
@@ -849,7 +1004,7 @@ function renderActions() {
   if (searchQuery) filtered = filtered.filter(a => a.title.toLowerCase().includes(searchQuery));
   if (activeImpact && activeCountry) {
     filtered = filtered.filter(a => {
-      const s = a.impacts[activeCountry] || 0;
+      const s = (a.impacts && a.impacts[activeCountry]) || 0;
       if (activeImpact === 'positive') return s > 0;
       if (activeImpact === 'negative') return s < 0;
       return s === 0;
@@ -857,33 +1012,41 @@ function renderActions() {
   }
 
   if (sortMode === 'impact-desc' && activeCountry) {
-    filtered = [...filtered].sort((a, b) => (b.impacts[activeCountry] || 0) - (a.impacts[activeCountry] || 0));
+    filtered = [...filtered].sort((a, b) => ((b.impacts && b.impacts[activeCountry]) || 0) - ((a.impacts && a.impacts[activeCountry]) || 0));
   } else if (sortMode === 'impact-asc' && activeCountry) {
-    filtered = [...filtered].sort((a, b) => (a.impacts[activeCountry] || 0) - (b.impacts[activeCountry] || 0));
+    filtered = [...filtered].sort((a, b) => ((a.impacts && a.impacts[activeCountry]) || 0) - ((b.impacts && b.impacts[activeCountry]) || 0));
   }
 
   const parts = [`Showing ${filtered.length} of ${ACTIONS.length} actions`];
+  if (activePresident) parts.push(PRES_LABELS[activePresident]);
   if (activeCountry) parts.push(activeCountry);
   if (activeCategory) parts.push(activeCategory);
   if (activeImpact) parts.push(activeImpact);
   if (searchQuery) parts.push(`"${searchQuery}"`);
   document.getElementById('action-count').textContent = parts.join(' \u00b7 ');
 
+  const countries = SCORES_DATA ? SCORES_DATA.countries : COUNTRIES;
+
   const el = document.getElementById('action-list');
   el.innerHTML = filtered.map(a => {
-    const dots = COUNTRIES.map(c => {
-      const s = a.impacts[c] || 0;
+    const impacts = a.impacts || {};
+    const reasons = a.reasons || {};
+
+    const dots = countries.map(c => {
+      const s = impacts[c] || 0;
       const highlighted = activeCountry === c ? ' highlighted' : '';
       return `<div class="impact-dot ${DOT_CLASS(s)}${highlighted}"><div class="tooltip">${c}: ${SCORE_NAME[s] || 'Neutral'}</div></div>`;
     }).join('');
 
     const catCls = CAT_SLUG(a.category);
     const titleHtml = a.url ? `<a href="${a.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${a.title}</a>` : a.title;
-    const eoLabel = a.eo !== 'N/A' ? (a.url ? `<a class="action-eo" href="${a.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">EO ${a.eo}</a>` : `<span class="action-eo">EO ${a.eo}</span>`) : '';
+    const eoLabel = a.eo && a.eo !== 'N/A' && a.eo !== '' ? (a.url ? `<a class="action-eo" href="${a.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">EO ${a.eo}</a>` : `<span class="action-eo">EO ${a.eo}</span>`) : '';
 
-    const impactGrid = COUNTRIES.map(c => {
-      const s = a.impacts[c] || 0;
-      const reason = a.reasons[c] || '';
+    const presBadge = !activePresident && a.president ? `<span class="president-badge">${PRES_LABELS[a.president] || a.president}</span>` : '';
+
+    const impactGrid = countries.map(c => {
+      const s = impacts[c] || 0;
+      const reason = reasons[c] || '';
       return `<div class="impact-cell">
         <div class="cell-header">
           <span class="country-label">${c}</span>
@@ -899,6 +1062,7 @@ function renderActions() {
           <div class="action-title">${titleHtml}</div>
           <div class="action-meta">
             ${eoLabel}
+            ${presBadge}
             <span class="category-badge ${catCls}">${a.category}</span>
             <span class="action-date">${a.date}</span>
           </div>
@@ -923,16 +1087,8 @@ function renderActions() {
   });
 }
 
-fetch('data.json')
-  .then(r => r.json())
-  .then(data => {
-    ACTIONS = data;
-    document.getElementById('stats').textContent =
-      `${ACTIONS.length} executive orders & military actions \u00b7 ${COUNTRIES.length} countries \u00b7 ${ACTIONS.length * COUNTRIES.length} evaluations`;
-    renderScoreboard();
-    renderFilters();
-    renderActions();
-  });
+// Initial load
+loadData();
 </script>
 
 </body>
